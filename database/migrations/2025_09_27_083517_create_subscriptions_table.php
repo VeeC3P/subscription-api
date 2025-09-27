@@ -13,7 +13,13 @@ return new class extends Migration
     {
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->enum('phase', ['trial', 'active', 'suspended', 'canceled'])->default('trial');
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
+            $table->decimal('price', 10, 2)->default(100.00);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
